@@ -1,8 +1,31 @@
-install.packages("lsr")
-library(lsr)
+---
+title: "FIFAS"
+author: "FIFAS"
+format:
+  html:
+    page-layout: full
+    embed-resources: true
+  pdf:
+    page-layout: full
+    embed-resources: true
+---
 
+# FIFAS
+
+```{r}
+#cargo librerias
+
+# cargamos datos
 dat <- read.csv("FIFA_WC_Russia_DB.csv" , header = TRUE)
-View(dat)
+```
+
+```{r}
+summary(dat)
+```
+
+```{r}
+dat <- read.csv("FIFA_WC_Russia_DB.csv" , header = TRUE)
+
 #Limpieza de Datos
 typeof(dat$Country) #character
 dat$Country <- as.factor(dat$Country)
@@ -18,12 +41,12 @@ dat$Squad_Formation <- as.factor(dat$Squad_Formation)
 #numero de victorias 
 modelo1 <- lm(Games_Won ~ Mkt_Value_per_player + Mkt_Value + Bets + Player_Age + Player_Height + Coach_Wage + Goals_For + Goals_Against + Invested_Money + Squad_Formation, data = dat)
 summary(modelo1)
-standardCoefs(modelo1)
+#standardCoefs(modelo1)
 plot(modelo1)
 
 modelo2 <- lm(dat$Games_Won ~ Goals_For + Goals_Against + Player_Age + Player_Height, data = dat)
 summary(modelo2)
-standardCoefs(modelo2)
+#standardCoefs(modelo2)
 plot(modelo2)
 
 modelo3 <- lm(Games_Won ~ Goals_For,data = dat)
@@ -42,5 +65,4 @@ predicciones <- predict(mejor_modeloAIC, dat[1,])
 
 # Ver las predicciones
 print(predicciones)
-
-
+```
